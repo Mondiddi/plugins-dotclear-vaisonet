@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			'Anti aspirateur',
 	/* Description*/		'Bloque les aspirateurs, robots, prefetecher peu respectueux',
 	/* Author */			'Maxime Varinard - Vaisonet.com',
-	/* Version */			'0.5',
+	/* Version */			'0.6',
 	/* Permissions */		null
 );
 ?>

@@ -12,7 +12,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 $core->blog->settings->setNameSpace('AntiAspi');
 
-$version = '0.5';
+$version = '0.6';
 /*vérification de version, à mettre en place sur la prochaine mise à jour
 $version = $core->plugins->moduleInfo('Anti aspirateur','version'); 
 if (version_compare($core->getVersion('Anti aspirateur'),$version,'>=')) {
