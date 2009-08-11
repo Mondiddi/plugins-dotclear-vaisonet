@@ -37,6 +37,8 @@ class AntiAspi
         $detect['UA'] = $_SERVER['HTTP_USER_AGENT'] ;
         $detect['UA-COMPATIBLE-SCORED'] = false; 
         $detect['ALERT_EMAIL'] = false;
+        $detect['T'] =  time();
+        $detect['S'] = $score;
         
         //On insère la nouvelle IP
         $query = 'INSERT INTO `dc_anti_aspi` (`IP`,`detect`,`date`) VALUES ("' . $core->con->escape($_SERVER['REMOTE_ADDR']) . '", NULL , NOW());';      
@@ -48,14 +50,14 @@ class AntiAspi
       $score = $detect['S'] + $core->blog->settings->score_page_vue;
       
       //Pour l'user-agent, s'il change
-      if ($_SERVER['USER_AGENT'] !== $detect['UA']) 
+      if ($_SERVER['HTTP_USER_AGENT'] !== $detect['UA']) 
       {
         $score = $score + $core->blog->settings->score_changement_useragent;
         $detect['UA'] = $_SERVER['HTTP_USER_AGENT'] ;
       }
       
       //On regarde si c'est un user-agent "compatible" et on ne le compte qu'une seule fois
-      if ($_SERVER['USER_AGENT'] === "Mozilla/4.0 (compatible;)" 
+      if ($_SERVER['HTTP_USER_AGENT'] === "Mozilla/4.0 (compatible;)" 
           AND $detect['UA-COMPATIBLE-SCORED'] === false) 
       {
         $score = $score + $core->blog->settings->score_useragent_generique;
@@ -73,7 +75,7 @@ class AntiAspi
         {
           $detect['ALERT_EMAIL'] = true;
           $message = 'Le plugin anti-aspirateur DotClear a bloqué la session suivante : ' . "\n"
-                    . ' - User-agent : ' . $_SERVER['USER_AGENT'] . "\n"
+                    . ' - User-agent : ' . $_SERVER['HTTP_USER_AGENT'] . "\n"
                     . ' - score : ' . "$score\n\n" . 'Autres variables serveur : ';
           foreach ($_SERVER as $key => $value)
           {
