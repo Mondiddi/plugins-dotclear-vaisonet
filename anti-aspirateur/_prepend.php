@@ -96,11 +96,8 @@ class AntiAspi
       $query = 'UPDATE dc_anti_aspi SET detect = \'' . serialize($detect) . '\' WHERE IP = "' . $core->con->escape($_SERVER['REMOTE_ADDR']) . '" LIMIT 1;';
       $core->con->execute($query);
       
-      //On efface 15 IP de plus de 15 minutes
-      //A affiner selon la volumétrie du site. La clause LIMIT permet de
-      //diluer l'effacement des IP dans le temps. Si la base devient trop grosse,
-      //Il faut modifier le délai et la limite
-      $query = 'DELETE FROM dc_anti_aspi WHERE date < (NOW() - 900) LIMIT 15;';
+      //On efface les ips blacklistées
+      $query = 'DELETE FROM dc_anti_aspi WHERE date < (NOW() - ' . (int)$core->blog->settings->score_page_vue . ');';
       $core->con->execute($query);
       
       if ($blocage)
