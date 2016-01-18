@@ -1,0 +1,1 @@
+Ce projet regroupe les sources des plugins DotClear publiés par Vaisonet.
